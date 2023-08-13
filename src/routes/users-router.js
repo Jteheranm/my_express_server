@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const { body } = require("express-validator");
 
 // Middlewares
-const verifyLoginMiddleware = require("../middlewares/verifyLoginMiddleware");
 const throwErrorMiddleware = require("../middlewares/throwErrorMiddleware");
 
 // Login
@@ -27,17 +26,8 @@ router.post(
     const token = jwt.sign(user, process.env.SECRET_KEY, {
       algorithm: "HS256",
     });
-    res.json({ token });
+    res.status(200).json({ token });
   }
 );
-
-router.get("/get-user", verifyLoginMiddleware, (req, res) => {
-  const userData = {
-    email: req.app.get("user").email,
-    name: req.app.get("user").name,
-    rol: req.app.get("user").rol,
-  };
-  res.json(userData);
-});
 
 module.exports = router;

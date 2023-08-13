@@ -48,13 +48,11 @@ app.set("users", [
   {
     email: "admin@example.com",
     name: "admin",
-    rol: "admin",
     password: "123456admin",
   },
   {
     email: "user@example.com",
     name: "user",
-    rol: "user",
     password: "123456user",
   },
 ]);

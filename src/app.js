@@ -1,8 +1,13 @@
 const express = require("express");
+const dotenv = require("dotenv");
+
+// Iniciar dotenv
+dotenv.config();
 
 // Rutas
 const listViewRouter = require("./routes/list-view-router");
 const listEditRouter = require("./routes/list-edit-router");
+const usersRouter = require("./routes/users-router");
 
 const app = express();
 
@@ -38,11 +43,30 @@ app.set("tasks", [
   },
 ]);
 
+// Lista de usuarios
+app.set("users", [
+  {
+    email: "admin@example.com",
+    name: "admin",
+    rol: "admin",
+    password: "123456admin",
+  },
+  {
+    email: "user@example.com",
+    name: "user",
+    rol: "user",
+    password: "123456user",
+  },
+]);
+
 // Listar tareas
 app.use("/", listViewRouter);
 
 // Modificar tareas
 app.use("/", listEditRouter);
+
+// Manejo de usuarios
+app.use("/", usersRouter);
 
 app.get("/", (req, res) => res.send("Hola mundo"));
 app.listen(80, () => console.log("Server ON"));

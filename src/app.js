@@ -1,12 +1,23 @@
 const express = require("express");
 
+// Rutas
 const listViewRouter = require("./routes/list-view-router");
 const listEditRouter = require("./routes/list-edit-router");
 
 const app = express();
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+// Middleware para solo recibir peticiones en los métodos permitidos
+app.use((req, res, next) => {
+  if (!/^(GET|PUT|POST|DELETE|PATCH)$/.test(req.method)) {
+    res.status(400).send("bad request");
+    return;
+  }
+  next();
+});
+
+// Para recibir el .body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Lista de tareas
 app.set("tasks", [
